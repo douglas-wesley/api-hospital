@@ -1,0 +1,10 @@
+package com.douglas.APIHosital.enums;
+
+public enum StatusAtendimento {
+    AGUARDANDO_ATENDIMENTO,
+    AGUARDANDO_MEDICO,
+    EM_ANDAMENTO_MEDICO,
+    AGUARDANDO_MEDICACAO,
+    EM_MEDICACAO,
+    CONCLUIDO
+}
