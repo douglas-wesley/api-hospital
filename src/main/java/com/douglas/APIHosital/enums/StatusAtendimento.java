@@ -6,5 +6,6 @@ public enum StatusAtendimento {
     EM_ANDAMENTO_MEDICO,
     AGUARDANDO_MEDICACAO,
     EM_MEDICACAO,
+    AGUARDANDO_ALTA_MEDICA,
     CONCLUIDO
 }
