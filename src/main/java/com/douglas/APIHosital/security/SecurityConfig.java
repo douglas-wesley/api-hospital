@@ -8,7 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.web.HttpSecurityBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -37,8 +36,14 @@ public class SecurityConfig {
 
                         // Definição de permissões por função
                         .requestMatchers(HttpMethod.POST, "/fichas").hasRole("ATENDENTE")
-                        .requestMatchers(HttpMethod.PUT, "/fichas/**/classificar").hasRole("ENFERMEIRO")
-                        .requestMatchers(HttpMethod.POST, "/atendimentos").hasRole("MEDICO")
+
+                        .requestMatchers(HttpMethod.PUT, "/fichas/{fichaId}/classificar").hasRole("ENFERMEIRO")
+
+                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/atender").hasRole("MEDICO") // <-- CORRIGIDO
+                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/concluir").hasRole("MEDICO")
+
+                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/medicar").hasRole("FARMACIA")
+
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore((Filter) securityFilter, UsernamePasswordAuthenticationFilter.class)
