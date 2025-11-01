@@ -1,6 +1,8 @@
 package com.douglas.APIHosital.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.douglas.APIHosital.enums.Risco;
+import com.douglas.APIHosital.enums.StatusAtendimento;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,8 +24,13 @@ public class Paciente {
     private LocalDate dataNascimento;
     private String telefone;
 
-    @OneToMany(mappedBy = "paciente")
-    @JsonIgnore
+    @OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
+    @JsonManagedReference
     private List<FichaAtendimento> fichaAtendimentos;
 
+    @Enumerated(EnumType.STRING)
+    private Risco risco;
+
+    @Enumerated(EnumType.STRING)
+    private StatusAtendimento statusAtendimento;
 }

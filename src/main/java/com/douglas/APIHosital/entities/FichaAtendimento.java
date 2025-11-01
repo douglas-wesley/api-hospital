@@ -1,5 +1,7 @@
 package com.douglas.APIHosital.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,6 +27,11 @@ public class FichaAtendimento {
 
     @ManyToOne
     @JoinColumn(name = "paciente_id")
+    @JsonBackReference
     private Paciente paciente;
+
+    @OneToOne(mappedBy = "fichaAtendimento", cascade = CascadeType.ALL, orphanRemoval = true) // Remove do banco
+    @JsonManagedReference
+    private AtendimentoMedico atendimentoMedico;
 
 }
