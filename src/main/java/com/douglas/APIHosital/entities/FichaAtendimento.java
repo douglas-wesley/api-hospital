@@ -1,5 +1,7 @@
 package com.douglas.APIHosital.entities;
 
+import com.douglas.APIHosital.enums.Risco;
+import com.douglas.APIHosital.enums.StatusAtendimento;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -24,6 +26,12 @@ public class FichaAtendimento {
     private Long id;
     private LocalDateTime dataHoraChegada;
     private String queixaPrincipal;
+
+    @Enumerated(EnumType.STRING)
+    private Risco classificacaoRisco;
+
+    @Enumerated(EnumType.STRING)
+    private StatusAtendimento statusAtendimento;
 
     @ManyToOne
     @JoinColumn(name = "paciente_id")
