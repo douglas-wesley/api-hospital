@@ -37,18 +37,15 @@ public class SecurityConfig {
                         .requestMatchers("/error").permitAll()
 
                         // Definição de permissões por função
-                        .requestMatchers(HttpMethod.POST, "/fichas").hasRole("ATENDENTE")
+                        .requestMatchers(HttpMethod.POST, "/fichas").hasRole("ATENDENTE") // Postar Ficha
+                        .requestMatchers(HttpMethod.PUT, "/fichas/{fichaId}/classificar").hasRole("ENFERMEIRO") // Classificar Risco
+                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/atender").hasRole("MEDICO") // Atender Paciente
+                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/concluir").hasRole("MEDICO") // Concluir Atendimento
+                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/medicar").hasRole("FARMACIA") // Medicar Paciente
 
-                        .requestMatchers(HttpMethod.PUT, "/fichas/{fichaId}/classificar").hasRole("ENFERMEIRO")
-
-                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/atender").hasRole("MEDICO") // <-- CORRIGIDO
-                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/concluir").hasRole("MEDICO")
-
-                        .requestMatchers(HttpMethod.POST, "/fichas/{fichaId}/medicar").hasRole("FARMACIA")
-
-                        .anyRequest().authenticated()
+                        .anyRequest().authenticated() // Todas as outras requisições precisam estar autenticadas
                 )
-                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class) // Adiciona o filtro de segurança personalizado
                 .build();
     }
 

@@ -35,6 +35,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         // Recupera o token do cabeçalho Authorization
         var token = this.recoverToken(request);
 
+        // Verifica se o token é válido
         if (token != null) {
             var email = tokenService.getEmailFromToken(token);
 
@@ -47,7 +48,6 @@ public class SecurityFilter extends OncePerRequestFilter {
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-
         filterChain.doFilter(request, response);
     }
 
