@@ -1,7 +1,7 @@
-package com.douglas.APIHosital.security;
+package com.douglas.APIHosital.config;
 
 
-import jakarta.servlet.Filter;
+import com.douglas.APIHosital.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
