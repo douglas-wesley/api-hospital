@@ -26,6 +26,12 @@ public class SecurityFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        String path = request.getRequestURI();
+        if (path.equals("/auth/login") || path.equals("/auth/register")) {
+            filterChain.doFilter(request, response); // Se for, apenas continua a requisição
+            return;
+        }
+
         // Recupera o token do cabeçalho Authorization
         var token = this.recoverToken(request);
 
@@ -50,7 +56,7 @@ public class SecurityFilter extends OncePerRequestFilter {
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return null;
         }
-        // Extrai apenas o token (remove o "Bearer ")
+        // Extrai apenas o token
         return authHeader.substring(7);
     }
 }
