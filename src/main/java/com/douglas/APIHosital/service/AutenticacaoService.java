@@ -8,6 +8,7 @@ import com.douglas.APIHosital.dto.UsuarioResponseDTO;
 import com.douglas.APIHosital.entities.Usuario;
 import com.douglas.APIHosital.repository.UsuarioRepository;
 import com.douglas.APIHosital.security.TokenService;
+import com.douglas.APIHosital.service.exceptions.EmailCadastradoException;
 import com.douglas.APIHosital.service.interfaces.IAutenticacaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -33,8 +34,9 @@ public class AutenticacaoService implements IAutenticacaoService {
 
     @Override
     public UsuarioResponseDTO register(UsuarioRegisterDTO dto) {
+
         if (usuarioRepository.findFirstByEmail(dto.getEmail()).isPresent()) {
-            throw new RuntimeException("Email já cadastrado."); // Valida se existe email ou não
+            throw new EmailCadastradoException("Email já está em uso.");
         }
 
         // Criptografia da Senha
