@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(name= "/auth")
+@RequestMapping("/auth")
 public class AutenticacaoController {
 
     private IAutenticacaoService autenticacaoService;
+
+    public AutenticacaoController(IAutenticacaoService autenticacaoService) {
+        this.autenticacaoService = autenticacaoService;
+    }
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponseDTO> login(@RequestBody @Valid LoginRequestDTO dto) {
