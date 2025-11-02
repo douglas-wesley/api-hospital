@@ -1,7 +1,6 @@
-package com.douglas.APIHosital.config;
+package com.douglas.APIHosital.security;
 
 
-import com.douglas.APIHosital.security.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,12 +29,12 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Endpoints públicos
-                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll() // Register & Login
+                        // Register & Login
                         .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                         // Permitir acesso ao endpoint /error para evitar loops de redirecionamento
                         .requestMatchers("/error").permitAll()
 
+                        .requestMatchers(HttpMethod.POST, "/auth/**").permitAll()
                         // Definição de permissões por função
                         .requestMatchers(HttpMethod.POST, "/fichas").hasRole("ATENDENTE") // Postar Ficha
                         .requestMatchers(HttpMethod.PUT, "/fichas/{fichaId}/classificar").hasRole("ENFERMEIRO") // Classificar Risco

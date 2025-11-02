@@ -27,8 +27,9 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getRequestURI();
-        if (path.equals("/auth/login") || path.equals("/auth/register")) {
-            filterChain.doFilter(request, response); // Se for, apenas continua a requisição
+
+        if (path.startsWith("/auth/") || path.startsWith("/v3/api-docs") || path.startsWith("/swagger-ui") || path.equals("/swagger-resources") || path.equals("/swagger-ui.html")) {
+            filterChain.doFilter(request, response);
             return;
         }
 
