@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  api:
+    build: .
+    container_name: 'api-hospital'
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/api_hospital
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    depends_on:
+      db:
+        condition: service_healthy # <-- Espera o healthcheck
+
+  db:
+    image: postgres:15-alpine
+    container_name: db-hospital
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_DB=api_hospital
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+    # --- CORREÇÃO AQUI ---
+    # O bloco 'healthcheck:' e tudo abaixo dele
+    # deve estar indentado NO MESMO NÍVEL de 'image:', 'ports:', etc.
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d api_hospital"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+# 'volumes:' deve estar na raiz (sem indentação)
+volumes:
+  db_data:
