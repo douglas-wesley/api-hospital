@@ -1,0 +1,21 @@
+spring.application.name=APIHospital
+
+# Server Configuration
+spring.datasource.url=jdbc:postgresql://localhost:5432/api_hospital
+spring.datasource.username=postgres
+spring.datasource.password=SENHA_DO_BANCO_DE_DADOS_AQUI
+
+# JPA Configuration
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.properties.hibernate.show_sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+# JWT Configuration
+api.security.token.secret=JWT_SECRET_AQUI
+api.security.token.expiration=3600000
+
+# Swagger Configuration
+springdoc.swagger-ui.path=/swagger-ui.html
+
+# Logging Configuration
+logging.level.org.springframework.security=DEBUG
