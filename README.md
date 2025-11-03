@@ -1,6 +1,6 @@
-# API de Atendimento Hospitalar (Teste Técnico)
+# API de Atendimento Hospitalar 
 
-Esta é uma **API RESTful** desenvolvida em **Java 17** com **Spring Boot 3** para simular o fluxo de atendimento de emergência de um hospital, conforme os requisitos do teste técnico para Desenvolvedor Back-End.
+Esta é uma **API RESTful** desenvolvida em **Java 17** com **Spring Boot 3** para simular o fluxo de atendimento de emergência de um hospital, conforme os requisitos do teste técnico da **Marques Consult** para Desenvolvedor Back-End.
 
 O projeto implementa um fluxo completo de atendimento (da recepção à alta), controle de acesso baseado em papéis (RBAC) com JWT, tratamento de exceções global (`@ControllerAdvice`) e documentação de API com Swagger/OpenAPI.
 
@@ -39,7 +39,7 @@ Passos:
 git clone https://github.com/douglas-wesley/api-hospital
 ```
 
-2. Abra um terminal na raiz do projeto (onde está o docker-compose.yml).
+2. Abra um terminal na raiz do projeto (onde está o `docker-compose.yml`).
 
 3. Execute o comando para construir e subir os containers:
 
@@ -47,7 +47,7 @@ git clone https://github.com/douglas-wesley/api-hospital
 docker-compose up --build
 ```
 4. Aguarde 1-2 minutos. 
-5. O Docker irá baixar a imagem do Postgres, criar o banco api_hospital, compilar o projeto Java e iniciar a API.
+5. O Docker irá baixar a imagem do Postgres, criar o banco `api_hospital`, compilar o projeto Java e iniciar a API.
 
 A API estará disponível em: `http://localhost:8080`
 
@@ -56,9 +56,9 @@ A API estará disponível em: `http://localhost:8080`
 Esta opção requer que você tenha o **Java 17** e o **PostgreSQL** instalados na sua máquina.
 
 #### 1. Configuração do Banco Local
-- Inicie seu serviço local do PostgreSQL (ex: sudo systemctl start postgresql).
+- Inicie o seu serviço local do PostgreSQL (ex: `sudo systemctl start postgresql`).
 
-- Acesse o psql como superusuário: sudo -u postgres psql
+- Acesse o psql como _superusuário_: `sudo -u postgres psql`
 
 - Crie o banco de dados (se ainda não existir):
 
@@ -77,8 +77,8 @@ ALTER USER postgres PASSWORD 'sua_senha_aqui';
 - O mesmo vale para o JWT secret (`jwt.secret`), você pode definir qualquer valor seguro.
 
 #### 3. Executar a Aplicação
-- Importe o projeto em sua IDE (IntelliJ, VS Code, etc.) como um projeto Maven.
-- Encontre e execute a classe principal ApiHositalApplication.java.
+- Importe o projeto na sua IDE (IntelliJ, VS Code, etc.) como um projeto Maven.
+- Encontre e execute a classe principal **ApiHositalApplication.java**.
 
 A API estará disponível em http://localhost:8080.
 
@@ -91,7 +91,7 @@ O Swagger já está configurado para o fluxo de autenticação JWT (`Bearer Toke
 ## 🧪 Testando o Fluxo da API
 A aplicação já vem com um `DataSeeder` que cria automaticamente os seguintes usuários no banco de dados para facilitar os testes:
 
- **Usuários Padrão:**
+ **Usuários Padrões:**
 - `atendente@hospital.com` (Role: `ATENDENTE`)
 - `enfermeiro@hospital.com` (Role: `ENFERMEIRO`)
 - `medico@hospital.com` (Role: `MEDICO`)
@@ -103,27 +103,27 @@ A aplicação já vem com um `DataSeeder` que cria automaticamente os seguintes 
 2. **Registrar ficha do Paciente (Atendente):** `POST /fichas`
    - Use o token do Atendente (no Header Authorization: Bearer <token>).
    - Envie o FichaCreateRequestDTO (ex: Paciente "José da Silva", CPF "111...").
-   - Resultado: 201 Created. Anote o id da ficha (ex: 1). 
+   - Resultado: `201 Created`. Anote o id da ficha (ex: 1). 
 3. **Login (Enfermeiro):** `POST /auth/login`
    - Use as credenciais do **Enfermeiro** e copie o token JWT.
 4. **Classificar Ficha (Enfermeiro):** `PUT /fichas/{id}/classificar`
    - Use o token do Enfermeiro.
    - Envie o `TriagemRequestDTO` (ex: Prioridade "ALTA", Sintomas "Dor no peito").
-   - Resultado: 200 OK. Status da ficha atualizado para "`AGUARDANDO_MEDICO`"
+   - Resultado: `200 OK`. Status da ficha atualizado para "`AGUARDANDO_MEDICO`"
 5. **Login (Médico):** `POST /auth/login`
    - Use as credenciais do **Médico** e copie o token JWT.
 6. **Atender Ficha (Médico):** `PUT /fichas/{id}/atender`
    - Use o token do Médico.
    - Envie o `AtendimentoMedicoRequestDTO` (ex: Diagnóstico "Infarto", Prescrição "Medicamento X").
-   - Resultado: 200 OK. Status da ficha atualizado para "`AGUARDANDO_MEDICACAO`"
+   - Resultado: `200 OK`. Status da ficha atualizado para "`AGUARDANDO_MEDICACAO`"
 7. **Login (Farmácia):** `POST /auth/login`
    - Use as credenciais da **Farmácia** e copie o token JWT.
 8. **Registrar Alta (Farmácia):** `PUT /fichas/{id}/alta`
    - Use o token da Farmácia.
-   - _Restulado_: 200 OK. Status da ficha atualizado para "`AGUARDANDO_ALTA_MEDICA`"
+   - _Restulado_: `200 OK`. Status da ficha atualizado para "`AGUARDANDO_ALTA_MEDICA`"
 9. **Concluir Atendimento (Médico):** `POST /fichas/{id}/concluir`
    - Use o token do Médico.
-   - _Resultado_: 200 OK. Status da ficha atualizado para "`CONCLUIDO`"
+   - _Resultado_: `200 OK`. Status da ficha atualizado para "`CONCLUIDO`"
 
 ### 2. Fluxo de Exceções
 - **409 (Email Duplicado):** Tente `POST /auth/register` com um e-mail que já existe (ex: `atendente@hospital.com`).
@@ -143,3 +143,4 @@ A aplicação já vem com um `DataSeeder` que cria automaticamente os seguintes 
 
 ## 🤝 Contribuição
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests para melhorias, correções de bugs ou novas funcionalidades.
+
