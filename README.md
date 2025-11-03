@@ -73,9 +73,8 @@ ALTER USER postgres PASSWORD 'sua_senha_aqui';
 
 #### 2. Configuração do Projeto Java
 
-- Na pasta `src/main/resources/`, **renomeie** o arquivo `application.properties.example` para `application.properties`. **(LEMBRE-SE DESSA ETAPA)**
-
 - Abra o application.properties e preencha a sua senha local do PostgreSQL (`spring.datasource.password=sua_senha_aqui`).
+- O mesmo vale para o JWT secret (`jwt.secret`), você pode definir qualquer valor seguro.
 
 #### 3. Executar a Aplicação
 - Importe o projeto em sua IDE (IntelliJ, VS Code, etc.) como um projeto Maven.
